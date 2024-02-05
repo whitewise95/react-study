@@ -124,3 +124,47 @@ jsconfig.json 파일을 생성(반드시 root 경로에)
 	"include": ["src"]
 }
 ```
+
+# 1-6 React Component
+
+## 1 React Component란 
+컴포넌트 개념 이해하기     
+
+```
+컴포넌트를 통해 UI를 재사용이 가능한 개별적인 여러 조각으로 나누고, 각 조각을 개별적으로 볼 수 있다.
+개념적으로 컴포넌트는 JavaScript 함수와 유사하고
+“props”라고 하는 임의의 입력을 받은 후, 화면에 어떻게 표시되는지를 기술하는 React 엘리먼트를 반환
+```  
+
+
+## 2 리액트 컴포넌트를 표현하는 두 가지 방법
+
+- 두 가지 모두 기능상으로는 동일하지만, 공식 홈페이지에서는 함수형 컴포넌트를 사용하기를 권장   
+
+> 함수형 컴포넌트  
+```TypeScript
+// props라는 입력을 받음
+// 화면에 어떻게 표현되는지를 기술하는 React 엘리먼츠를 반환(return)
+
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+// 훨씬 쉬운 표현을 해보면 아래와 같죠.
+function App () {
+	return <div>hello</div>
+}
+```  
+
+> 클래스형 컴포넌트  
+```TypeScript
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```  
+
+
+
+
