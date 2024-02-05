@@ -55,6 +55,10 @@
 
 
 
+<br>
+
+
+
 
 
 # 1-5 CRA(Create React App)
@@ -123,7 +127,11 @@ jsconfig.json 파일을 생성(반드시 root 경로에)
 	},
 	"include": ["src"]
 }
-```
+```  
+
+
+<br>
+
 
 # 1-6 React Component
 
@@ -164,6 +172,28 @@ class Welcome extends React.Component {
   }
 }
 ```  
+<br>
+
+# 1-7 부모-자식 컴포넌트
+
+## 1 컴포넌트 안에 컴포넌트 넣기  
+- 컴포넌트는 다른 컴포넌트를 품을 수 있다. 이때 다른 컴포넌트를 품는 컴포넌트를 부모 컴포넌트라고 부르고, 다른 컴포넌트 안에서 품어지는 컴포넌트를 자식 컴포넌트라고 부른다.
+
+
+```TypeScript
+// src/App.js
+import React from "react";
+
+function Child() {
+  return <div>나는 자식입니다.</div>;
+}
+
+function App() {
+  return <Child />;
+}
+
+export default App;
+```
 
 
 
