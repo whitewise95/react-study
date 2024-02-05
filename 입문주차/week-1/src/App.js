@@ -1,31 +1,23 @@
 import './App.css';
 // import 'App.css';
 
+// 조부모 컴포넌트
+function GrandParent() {
+  return <Parent/>
+}
+
+// 부모 컴포넌트
+function Parent() {
+  return <Child/>
+}
+
+// 자식 컴포넌트
+function Child() {
+  return <div>나는 자식 입니다.</div>;
+}
+
 function App() {
-  function onClickHandler(){
-    alert("클릭")
-  }
-
-  const onClickHandler2 = () => {
-    alert("클릭")
-  }
-	// <---- 자바스크립트 영역 ---->
-
-  return (
-  /* <---- HTML/JSX 영역  ---->*/
-    <div
-      style={{
-        height: '100vh',
-        display: ' flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-    <span>이것은 내가 만든 App컴포너트 입니다.</span>
-    <button onClick={onClickHandler2}>클릭!</button>
-    </div>
-  );
+  return <GrandParent/>
 }
 
 export default App;
