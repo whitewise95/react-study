@@ -197,4 +197,99 @@ export default App;
 
 
 
+<br>
+
+# 1-8  JSX(JavaScript + XML)
+
+## 1 JSX란?
+
+```TypeScript
+// JavaScript를 확장한 문법
+// JavaScript의 모든 기능이 포함되어 있으며, React Element를 생성하기 위한 문법
+const element = <h1>Hello, world!</h1>;
+```
+
+## 프로젝트 내에 있는 App.js를 통해 살펴보기   
+> 리액트에서는 index.html 이라는 딱 하나의 html 파일만 존재하기에 **JSX 문법을 사용해서 React 요소를 만들고 DOM에 렌더링 시켜서** 그린다.
+
+```TypeScript
+// import [패키지명] from [경로] 이 형식으로 불러와요.
+import React from 'react'; 
+// js 파일 뿐 아니라 이미지도 가능가능!
+import logo from './logo.svg';
+// css? 가능!
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
+> 자바스크립트 안에서 html 태그같은 마크업을 넣어 뷰(UI) 작업을 편하게 사용가능
+```TypeScript
+const start_half = <div>
+    <h1>안녕하세요!</h1>
+    <p>시작이 반이다!</p>
+  </div>;
+```  
+
+- 지금은 리액트 돔을 구성하는 건 리액트 요소! 돔을 구성하는 건 돔 요소!   
+
+
+
+```typeScript
+import React from 'react'
+
+export default function App() {
+ 
+ const number = 1;
+
+const pTagStyle = {
+  color : 'red',
+}
+
+  return (
+    <div className='test-class'>
+       <p>안녕하세요 리액트입니다.</p>
+       {/* 주석을 사용하는 방법입니다. */}
+       {/* 삼항연산자를 사용해 볼게요! */}
+       <p style={pTagStyle}>{
+       number > 10 
+       ? number + '은 10 보다 크다'  
+       : number + '은 10 보다 작다'}
+       </p>
+    </div>
+  )
+}
+```
+
+### 리액트 스니펫   
+- 마켓에서 react snippet로 설치   
+![alt text](image-3.png)  
+
+
+- 빈 js파일에서 rfc, rfce 로 간단하게 아래처럼 만들 수 있음  
+![alt text](image-4.png)  
+
+
 
