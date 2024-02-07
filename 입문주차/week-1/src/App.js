@@ -1,23 +1,25 @@
 import React from 'react'
 
-export default function App() {
- 
- const number = 1;
-
-const pTagStyle = {
-  color : 'red',
+// props를 통해 부모 -> 자식 데이터가 전달
+function Son(props) {
+  return <div>{props.GrandFather}의 딸 {props.motherName}의 아들 입니다.</div>
 }
 
+//  부모 -> 자식 에게 정보를 전달했다!
+function Mather(props) {
+  const name = "흥부인";
+  return <Son motherName = {name} GrandFather = {props.GrandFather}/>
+}
+
+function GrandFather(){
+  const name = "흥할아버지";
+    return <Mather GrandFather = {name} />
+}
+
+function App() {
   return (
-    <div className='test-class'>
-       <p>안녕하세요 리액트입니다.</p>
-       {/* 주석을 사용하는 방법입니다. */}
-       {/* 삼항연산자를 사용해 볼게요! */}
-       <p style={pTagStyle}>{
-       number > 10 
-       ? number + '은 10 보다 크다'  
-       : number + '은 10 보다 작다'}
-       </p>
-    </div>
+    <div><GrandFather/></div>
   )
 }
+
+export default App

@@ -55,6 +55,10 @@
 
 
 
+
+<hr>
+
+<br>
 <br>
 
 
@@ -130,7 +134,15 @@ jsconfig.json 파일을 생성(반드시 root 경로에)
 ```  
 
 
+
+
+<hr>
+
 <br>
+<br>
+
+
+
 
 
 # 1-6 React Component
@@ -172,7 +184,15 @@ class Welcome extends React.Component {
   }
 }
 ```  
+
+
+<hr>
+
 <br>
+<br>
+
+
+
 
 # 1-7 부모-자식 컴포넌트
 
@@ -197,7 +217,14 @@ export default App;
 
 
 
+
+<hr>
+
 <br>
+<br>
+
+
+
 
 # 1-8  JSX(JavaScript + XML)
 
@@ -292,4 +319,127 @@ const pTagStyle = {
 ![alt text](image-4.png)  
 
 
+<hr>
 
+<br>
+<br>
+
+
+# 1-9 Props의 개요
+
+## 1 props란?
+
+#### **컴포넌트 끼리의 정보교환 방식!**  
+부모 컴포넌트가 자식 컴포넌트에게 물려준 데이터에요! 다시 말해, **컴포넌트 간의 정보 교류 방법**입니다.  
+> 1. props는 반드시 위에서 아래 방향으로 흐른다. 즉, [부모] → [자식] 방향으로만 흐른다(단방향).  
+> 2. props는 반드시 읽기 전용으로 취급하며, 변경하지 않는다.    
+
+
+```typeScript
+import React from "react";
+
+// div안에서 { } 를 쓰고 props.motherName을 넣어보세요.
+function Child(props) {
+  return <div>{props.motherName}</div>;
+}
+
+function Mother() {
+  const name = "홍부인";
+  return <Child motherName={name} />;
+}
+
+function GrandFather() {
+  return <Mother />;
+}
+
+function App() {
+  return <GrandFather />;
+}
+
+export default App;
+```    
+
+
+
+
+```typeScript
+import React from 'react'
+
+// props를 통해 부모 -> 자식 데이터가 전달
+function Son(props) {
+  return <div>{props.GrandFather}의 딸 {props.motherName}의 아들 입니다.</div>
+}
+
+//  부모 -> 자식 에게 정보를 전달했다!
+function Mather(props) {
+  const name = "흥부인";
+  return <Son motherName = {name} GrandFather = {props.GrandFather}/>
+}
+
+function GrandFather(){
+  const name = "흥할아버지";
+    return <Mather GrandFather = {name} />
+}
+
+function App() {
+  return (
+    <div><GrandFather/></div>
+  )
+}
+
+export default App
+```  
+
+
+## 2 prop drilling  
+```
+[부모] → [자식] → [그 자식] → [그 자식의 자식] 이 데이터를 받기 위해선 무려 3번이나 데이터를 내려줘야 한다.
+ 이걸 바로 prop drilling, props가 아래로 뚫고 내려간다. 라고 한다.
+```  
+  
+#### 예시  
+```typeScript
+export default function App() {
+  return (
+    <div className="App">
+      <FirstComponent content="Who needs me?" />
+    </div>
+  );
+}
+
+function FirstComponent({ content }) {
+  return (
+    <div>
+      <h3>I am the first component</h3>;
+      <SecondComponent content={content} />|
+    </div>
+  );
+}
+
+function SecondComponent({ content }) {
+  return (
+    <div>
+      <h3>I am the second component</h3>;
+      <ThirdComponent content={content} />
+    </div>
+  );
+}
+
+function ThirdComponent({ content }) {
+  return (
+    <div>
+      <h3>I am the third component</h3>;
+      <ComponentNeedingProps content={content} />
+    </div>
+  );
+}
+
+function ComponentNeedingProps({ content }) {
+  return <h3>{content}</h3>;
+}
+```  
+
+<hr>
+
+<br>
+<br>
