@@ -443,3 +443,90 @@ function ComponentNeedingProps({ content }) {
 
 <br>
 <br>
+
+
+# 1-10 Props children  
+## 1 children이란?  
+- 아래 예제 코드를 보면 `<User>안녕하세요</User>` 이렇게 사용하고 있는데 기존에 `<User hello='안녕하세요'>` 이렇게 props를 보내던 방식과는 조금 다릅니다. 이것이 children props를 보내는 방식입니다.  그렇다면 자식 컴포넌트에서는 어떻게 정보를 받을까요?  정보를 받는 방식은 기존과 동일합니다. 대신 그 이름이 children 으로 정해져 있습니다.  
+
+```typescript
+import React from "react";
+
+function User(props) {
+  return <div>{props.children}</div>;
+}
+
+function App() {
+  return <User>안녕하세요</User>;
+}
+export
+```  
+
+
+## 2 children의 용도
+> Layout 컴포넌트를 만들 때 자주 사용
+- Layout 컴포넌트 안에는 header 라는 컴포넌트가 있고, header 아래에 {props.children} 를 통해서  props를 받아 렌더링 하고 있다. 
+
+- Layout 
+```typescript
+import React from 'react'
+
+function Layout(props) {
+  return (
+    <>
+    <header style={{
+        margin : "10px",
+        border : "1px solid red"
+    }}>
+        항상 출력되는 머릿글입니다.
+    </header>
+    {props.children}
+    </>
+  )
+}
+
+export default Layout
+```
+
+- Layout 컴포넌트가 쓰여지는 모든 곳에서 <Layout>…</Layout> 안에 있는 정보를 받아서 가져올 수 있는 것
+```typescript
+import React from "react";
+import Layout from "./components/Layout";
+
+function App() {
+  return (
+
+    <Layout> 
+      <div>여긴 App의 컨텐츠가 들어갑니다.</div>
+    </Layout>
+  );
+}
+export default App;
+```  
+
+
+- Layout 컴포넌트를 About 컴포넌트에 또 사용한다. 
+
+```typescript
+// src/About.js
+
+import React from "react";
+import Layout from "./components/Layout";
+
+function About() {
+  return (
+    <Layout> 
+      <div>여긴 About의 컨텐츠가 들어갑니다.</div>
+    </Layout>
+  );
+}
+export default About;
+```
+
+
+<hr>
+
+<br>
+<br>
+
+
