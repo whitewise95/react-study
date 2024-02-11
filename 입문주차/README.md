@@ -530,3 +530,42 @@ export default About;
 <br>
 
 
+# 1-11 Props 추출  
+## 1 구조분해 할당과 Props  
+>  기존 props 할당  ->  자식 컴포넌트에서 props를 받을 때 하나의 오브젝트로 받아 사용
+``` typescript
+function Todo(props){
+	return <div>{props.todo}</div>
+}
+```     
+
+<br>
+
+
+> 자바스크립트의 구조 분해 할당을 이용 ->  
+```typescript
+function Todo({ title, body, isDone, id }){
+	return <div>{title}</div>
+}
+```  
+
+<br>
+
+
+## 2 defaultProps    
+> defaultProps란, 부모 컴포넌트에서 props를 보내주지 않아도 설정될 초기 값    
+
+```typescript
+import React from 'react';
+
+function Child({ name }){
+	return <div>내 이름은 {name} 입니다. </div>
+}
+
+// 이렇게 설정합니다.
+Child.defaultProps={
+	name: '기본 이름'
+}
+
+export default Child
+```
