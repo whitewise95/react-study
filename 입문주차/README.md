@@ -569,3 +569,95 @@ Child.defaultProps={
 
 export default Child
 ```
+
+
+<hr>
+
+
+<br>
+<br>
+
+# 1-12 State  
+> State란 컴포넌트 내부에서 바뀔 수 있는 값을 의미이며 UI(엘리먼트)로의 반영이 되는 것을 목적으로 사용   
+
+## 1 State 생성  
+```typescript  
+import React, { useState } from 'react';
+
+function GrandFather() {
+  const [name, setName] = useState("김할아"); // 이것이 state!
+  return <Mother grandFatherName={name} />;
+}
+
+
+//const [ value, setValue ] = useState( 초기값 )
+```  
+
+## 2 State 수정  
+```typescript
+import React, { useState } from 'react'
+
+function App() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  return (
+      <div>
+        아이디 : <input
+         value={username}
+         onChange={function(event){
+          setUsername(event.target.value);
+            }}></input>
+        <br/>
+        패스워드 : <input 
+        type='password' 
+        value={password} 
+        onChange={function(event){
+          setPassword(  event.target.value);
+        }}></input>
+        <br/>
+        <button onClick={function(){
+          alert(username + ", " + password);
+          setUsername("");
+          setPassword(  "");
+        }}>로그인</button>
+      </div>
+  )
+}
+export default App
+
+// state를 변경할때는 setValue(바꾸고 싶은 값) 를 사용
+```
+
+
+## 3 불변성이란?
+- **(1) 불변성이란?**
+    
+    **불변성이란 메모리에 있는 값을 변경할 수 없는 것**을 말합니다. 자바스크립트의 데이터 형태중에 원시 데이터는 불변성이 있고, 원시 데이터가 아닌 객체, 배열, 함수는 불변성 없습니다.
+    
+- **(2) 변수를 저장하면, 메모리에 어떻게 저장이 될까?**
+    
+    만약 우리가 `let number = 1`  이라고 선언을 하면, 메모리에는 1 이라는 값이 저장됩니다. 그리고 `number` 라는 **변수는 메모리에 있는 1을 참조**하죠. 그리고 이어서 우리가 `let secondNumber = 1` 이라고 다른 변수를 선언을 했다고 가정해봅시다. 이때도 자바스크립트는 이미 메모리에 생성되어 있는 1이라는 값을 참조합니다. **즉, number와 secondNumber는 변수의 이름은 다르지만, 같은 메모리의 값을 바라보고 있는 것이죠. 그래서 우리가 콘솔에 `number === secondNumber` 를 하면 `true`가 보입니다.**
+    
+    하지만 원시데이터가 아닌 값(객체, 배열, 함수)는 이렇지 않아요. `let obj_1 = {name: ‘kim’}` 이라는 값을 선언하면 메모리에 obj_1이 저장이 됩니다. 그리고 이어서 `let obj_2 = {name: ‘kim’}` 이라고 같은 값을 선언하면 **obj_2라는 메모리 공간에 새롭게 저장**이 됩니다. **그래서 `obj_1 === obj2` 는 `false` 가 되죠.** 
+    
+- **(3) 데이터를 수정하면 어떻게 될까?**
+    
+    다시 원시데이터로 돌아와서 만약에 기존에 1이던 number를 `number = 2` 라고 새로운 값을 할당하면 메모리에서는 어떻게 될까요? **원시 데이터는 불변성이 있습니다.** 즉, 기존 메모리에 저장이 되어 있는 1이라는 값이 변하지 않고, 새로운 메모리 저장공간에 2가 생기고 number라는 값을 새로운 메모리 공간에 저장된 2를 참조하게 됩니다.  그래서 **secondNumber를 콘솔에 찍으면 여전히 1이라고 콘솔에 보입니다.** **number와 secondNumber는 각각 다른 메모리 저장공간을 참조하고 있기 때문**이죠.
+    
+    obj_1를 수정해봅시다. `obj_1.name = ‘park’` 이라고 새로운 값을 할당하면 어떻게 될까요? **객체는 불변성이 없습니다. 그래서 기존 메모리 저장공간에 있는 `{name: ‘kim’}` 이라는 값이 `{name : ‘park’}` 으로 바뀌어 버립니다.** 차이를 아시겠나요?
+    
+    **원시데이터는 수정을 했을 때 메모리에 저장된 값 자체는 바꿀 수 없고, 새로운 메모리 저장공간에 새로운 값을 저장합니다. 원시데이터가 아닌 데이터는 수정했을 때 기존에 저장되어 있던 메모리 저장공간의 값 자체를 바꿔버립니다.**
+    
+- **(4) 왜 리액트에서는 원시데이터가 아닌 데이터의 불변성을 지켜주는 것을 중요시할까?**
+    
+    리액트에서는 화면을 리레더링 할지 말지 결정할 때 state의 변화를 확인합니다. state가 변했으면 리렌더링 하는 것이고, state가 변하지 않았으면 리렌더링을 하지 않죠.
+    
+    그때, state가 변했는지 변하지 않았는지 확인하는 방법이 state의 변화 전, 후의 `**메모리 주소`를 비교합니다.** 그래서 만약 **리액트에서 원시데이터가 아닌 데이터를 수정할 때 불변성을 지켜주지 않고, 직접 수정을 가하면 값은 바뀌지만 메모리주소는 변함이 없게 되는것이죠.** 그래서 즉, 개발자가 값은 바꿨지만 리액트는 state가 변했다고 인지하지 못하게 됩니다. 그래서 결국 마땅히 일어나야 할 리렌더링이 일어나지 않게되죠.
+
+    
+
+
+
+
