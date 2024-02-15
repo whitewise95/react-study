@@ -813,3 +813,58 @@ ReactDOM.render(header, document.getElementById('root'));
 ## 5 브라우저 렌더링  
 
 브라우저의 렌더링과 리액트의 렌더링은 엄연히 다른 독립적인 프로세스입니다. 렌더링이 완료되고 React가 DOM을 업데이트한 후 브라우저는 화면을 그립니다. 이 프로세스를 "브라우저 렌더링"이라고 하지만 혼동을 피하기 위해 "페인팅"이라고도 합니다. 브라우저 렌더링에 자세히 알아보고 싶다면 [브라우저는 어떻게 동작하는가?](https://d2.naver.com/helloworld/59361)를 참고해보세요!
+
+
+
+
+<hr>
+
+
+<br>
+<br>
+
+# 1-18 반복되는 컴포넌트 처리하기 
+
+## Map 사용해보기 
+```typescript
+import React from 'react'
+import "App.css";
+
+
+function Block (props) {
+  return <div className='square-style'>{props.name}</div>
+}
+
+function App() {
+  const testArr = ["감자", "고구마", "오이", "가지", "옥수수"]
+
+  return (
+    <>
+    <div className='app-style'>
+        {
+          testArr.map(function(item){
+              return <Block name = {item}></Block>
+          })
+
+        }
+    </div>
+
+    
+  <div className='app-style'>
+        {
+            testArr.filter(function(item){
+                return item !== "감자"
+            }).map(function(item) {
+              return <Block name = {item}></Block>
+            })
+          }
+
+  </div>
+  </>
+  )
+}
+
+export default App 
+```
+
+![alt text](image-7.png)
