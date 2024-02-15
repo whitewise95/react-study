@@ -7,15 +7,32 @@ function Block (props) {
 }
 
 function App() {
+  const testArr = ["감자", "고구마", "오이", "가지", "옥수수"]
+
   return (
+    <>
     <div className='app-style'>
-      <Block name = '감자'></Block>
-      <Block name = '고구마'></Block>
-      <Block name = '오이'></Block>
-      <Block name = '가지'></Block>
-      <Block name = '옥수수'></Block>
+        {
+          testArr.map(function(item){
+              return <Block name = {item}></Block>
+          })
+
+        }
     </div>
+
+    
+  <div className='app-style'>
+        {
+            testArr.filter(function(item){
+                return item !== "감자"
+            }).map(function(item) {
+              return <Block name = {item}></Block>
+            })
+          }
+
+  </div>
+  </>
   )
 }
 
-export default App
+export default App 
