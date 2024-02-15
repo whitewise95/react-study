@@ -1,31 +1,25 @@
 import React, { useState } from 'react'
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
+  const [count, setCount] = useState(0);
+
+  function flus() {
+    setCount(count + 1)
+  }
+  
+  function mius() {
+    setCount(count - 1)
+  }
 
   return (
+    <div>
+      {count}
       <div>
-        아이디 : <input
-         value={username}
-         onChange={function(event){
-          setUsername(event.target.value);
-            }}></input>
-        <br/>
-        패스워드 : <input 
-        type='password' 
-        value={password} 
-        onChange={function(event){
-          setPassword(  event.target.value);
-        }}></input>
-        <br/>
-        <button onClick={function(){
-          alert(username + ", " + password);
-          setUsername("");
-          setPassword(  "");
-        }}>로그인</button>
+        <button onClick={flus}>+ 1</button>
+        <button onClick={mius}>- 1</button>
       </div>
+    </div>
   )
 }
 
