@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
+import "App.css";
+
+
+function Block (props) {
+  return <div className='square-style'>{props.name}</div>
+}
 
 function App() {
-
-  const [count, setCount] = useState(0);
-
-  function flus() {
-    setCount(count + 1)
-  }
-  
-  function mius() {
-    setCount(count - 1)
-  }
-
   return (
-    <div>
-      {count}
-      <div>
-        <button onClick={flus}>+ 1</button>
-        <button onClick={mius}>- 1</button>
-      </div>
+    <div className='app-style'>
+      <Block name = '감자'></Block>
+      <Block name = '고구마'></Block>
+      <Block name = '오이'></Block>
+      <Block name = '가지'></Block>
+      <Block name = '옥수수'></Block>
     </div>
   )
 }
