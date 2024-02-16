@@ -867,4 +867,197 @@ function App() {
 export default App 
 ```
 
-![alt text](image-7.png)
+- **1) 혹시 브라우저 콘솔에서 에러가 뜬다면?**  
+
+![alt text](image-8.png)   
+    혹시 map을 사용해서 화면을 구현했을 때 이런 에러가 보이지 않으셨나요?
+
+    리액트에서 `map`을 사용하여 컴포넌트를 반복 렌더링 할 때는 반드시 컴포넌트에 `key`를 넣어줘야 합니다. 아래 코드 처럼 말이죠. 넣지 않으면 위에 처럼 오류가 발생합니다.
+    
+    **key가 필요한 이유**는 React에서 컴포넌트 배열을 렌더링했을 때 **각각의 원소에서 변동이 있는지 알아내려고 사용하기 때문**입니다. 만약 key가 없다면 React는 가상돔을 비교하는 과정에서 배열을 순차적으로 비교하면서 변화를 감지하려 합니다. 하지만 **key가 있으면 이 값을 이용해서 어떤 변화가 일어났는지 더 빠르게 알아낼 수 있게 됩니다.** **즉, key값을 넣어줘야 React의 성능이 더 최적화 된다. 라는 의미입니다.**  
+
+
+```javascript
+ <div style={style}>
+      {users.map((user) => {
+        return <User user={user} key={user.id} />;
+      })}
+  </div>
+```
+
+
+
+
+<hr>
+
+
+<br>
+<br>
+
+# 1-21 컴포넌트 분리하기
+
+#### 컴포넌트 분리 전  
+- 아래 로직은 컴포넌트를 분리하기 전의 로직이다.  보면 User 컴포넌트 Button 컴포넌트 App 컴포넌트가 하나의 jsx 파일에 존재한다.
+```javascript
+import React, { useState } from 'react'
+import "./App.css"
+
+function App() {
+  // const users = [
+  //   {id: 1, age: 30, name: "송중기"},
+  //   {id: 2, age: 24, name: "송강"},
+  //   {id: 3, age: 21, name: "김유정"},
+  //   {id: 4, age: 29, name: "구교환"}
+  // ]
+
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
+
+  const [users, setUsers] = useState([
+    { id: 1, age: 30, name: "송중기" },
+    { id: 2, age: 24, name: "송강" },
+    { id: 3, age: 21, name: "김유정" },
+    { id: 4, age: 29, name: "구교환" }
+  ])
+
+  const saveUsersHandler = () => {
+    const newUser = { id: users.length + 1, age: age, name: name };
+    setUsers([...users, newUser]); // 원래있던 user에 newUser 추가
+  }
+
+  const removeUsersHandler = (id) => {
+    const totalUsers = users.filter(function (item) { return item.id !== id });
+    setUsers(totalUsers === undefined ? [{}] : totalUsers); // 원래있던 user에 newUser 추가 
+  }
+
+  return (
+    <div>
+      이름 :<input type='text' value={name} onChange={(event) => setName(event.target.value)} />
+      나이 : <input type='text' value={age} onChange={(event) => setAge(event.target.value)} />
+      <Button functionValue = {saveUsersHandler}>등록</Button>
+      <div className='app-style'>
+        {
+          users.map(function (item) {
+            return <User 
+            key={item.id}
+            user = {item}
+            removeUsersHandler = {removeUsersHandler}
+            ></User>
+          })
+
+        }
+      </div>
+    </div>
+
+  )
+}
+
+const User = ({user, removeUsersHandler}) => {
+  console.log(user);
+  return (
+    <>
+      <div
+        key={user.id}
+        className='square-style'>{user.age} - {user.name}
+      </div>
+      <Button functionValue = {() => removeUsersHandler(user.id)}>삭제</Button>
+    </>);
+}
+
+const Button = ({functionValue, children}) => {
+  return <button onClick={functionValue}>{children}</button>;
+}
+
+export default App
+```
+
+#### 컴포넌트 분리   
+- 컴포넌트 폴더를 만들어 각 컴포넌트를 쪼갰다.  
+
+![alt text](image-9.png)  
+
+```javascript
+const Button = ({functionValue, children}) => {
+    return <button onClick={functionValue}>{children}</button>;
+  }
+
+  export default Button;
+```
+
+```javascript
+const User = ({ user, removeUsersHandler }) => {
+    console.log(user);
+    return (
+        <>
+            <div
+                key={user.id}
+                className='square-style'>{user.age} - {user.name}
+            </div>
+            <Button functionValue={() => removeUsersHandler(user.id)}>삭제</Button>
+        </>);
+}
+
+export default User;
+```
+
+
+#### 컴포넌트 분리 후 
+```javascript
+import React, { useState } from 'react'
+import "./App.css"
+import Button from 'componet/Button';
+import User from 'componet/Users';
+
+function App() {
+  // const users = [
+  //   {id: 1, age: 30, name: "송중기"},
+  //   {id: 2, age: 24, name: "송강"},
+  //   {id: 3, age: 21, name: "김유정"},
+  //   {id: 4, age: 29, name: "구교환"}
+  // ]
+
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
+
+  const [users, setUsers] = useState([
+    { id: 1, age: 30, name: "송중기" },
+    { id: 2, age: 24, name: "송강" },
+    { id: 3, age: 21, name: "김유정" },
+    { id: 4, age: 29, name: "구교환" }
+  ])
+
+  const saveUsersHandler = () => {
+    const newUser = { id: users.length + 1, age: age, name: name };
+    setUsers([...users, newUser]); // 원래있던 user에 newUser 추가
+  }
+
+  const removeUsersHandler = (id) => {
+    const totalUsers = users.filter(function (item) { return item.id !== id });
+    setUsers(totalUsers === undefined ? [{}] : totalUsers); // 원래있던 user에 newUser 추가 
+  }
+
+  return (
+    <div>
+      이름 :<input type='text' value={name} onChange={(event) => setName(event.target.value)} />
+      나이 : <input type='text' value={age} onChange={(event) => setAge(event.target.value)} />
+      <Button functionValue = {saveUsersHandler}>등록</Button>
+      <div className='app-style'>
+        {
+          users.map(function (item) {
+            return <User 
+            key={item.id}
+            user = {item}
+            removeUsersHandler = {removeUsersHandler}
+            ></User>
+          })
+
+        }
+      </div>
+    </div>
+
+  )
+}
+
+
+export default App
+```
