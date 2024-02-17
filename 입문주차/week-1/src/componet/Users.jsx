@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 const User = ({ user, removeUsersHandler }) => {
     console.log(user);
     return (
