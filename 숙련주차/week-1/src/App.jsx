@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import TestPage from './componet/TestPage'
+import GlobalStyle from './GlobalSyle'
 
 const StContainer = styled.div`
   display: flex;
@@ -15,7 +17,7 @@ const StBox = styled.div`
 function App() {
   const colors = [{ color: 'red' }, { color: 'blue' }, { color: 'yellow' }, { color: 'black' }]
 
- const getBoxName = (color) => {
+  const getBoxName = (color) => {
     switch (color) {
       case 'red':
         return '빨간박스'
@@ -25,18 +27,22 @@ function App() {
         return '노랑박스'
       case 'black':
         return '검정박스'
-  
+
     }
- }
+  }
 
   return (
-    <StContainer>
-      {
-        colors.map(function(item){
-          return  <StBox borderColor= {item.color}>{getBoxName(item.color)}</StBox>
-        })
-      }
-    </StContainer>
+    <>
+    <GlobalStyle/>
+    <TestPage></TestPage>
+    </>
+    // <StContainer>
+    //   {
+    //     colors.map(function (item) {
+    //       return <StBox borderColor={item.color}>{getBoxName(item.color)}</StBox>
+    //     })
+    //   }
+    // </StContainer>
   )
 }
 

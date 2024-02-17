@@ -87,6 +87,114 @@ export default App;
 
 
 
+<hr>
+
+<br>
+<br>
+
+
+# 02. Styled Components - GlobalStyles, Sass 소개, css reset
+> tyled components는 컴포넌트 내에서만 활용가능하며 공통적으로 들어가야 할 스타일을 적용해야 할 경우 전역적으로(globally)’ 스타일을 지정한다. 라고 표현 그럴 때 적용하는 방법이 바로 전역 스타일링
+
+## 1 GlobalStyles 적용  
+> GlobalStyle.jsx  
+```js
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+  }
+`;
+
+export default GlobalStyle;
+```  
+
+> App.jsx
+```js
+import GlobalStyle from "./GlobalStyle";
+import BlogPost from "./BlogPost";
+
+function App() {
+	const title = '전역 스타일링 제목입니다.';
+	const contents = '전역 스타일링 내용입니다.';
+  return (
+    <>
+      <GlobalStyle />
+      <BlogPost title={title} contents={contents} />
+    </>
+  );
+}
+
+export default App;
+```
+
+## 2 css reset  
+```css
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+```  
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css" />
+  </head>
+  <body>
+    <span>Default Style을 테스트 해 봅니다.</span>
+    <h1>이건 h1 태그에요</h1>
+    <p>이건 p 태그에요</p>
+  </body>
+</html>
+```  
+![alt text](image-3.png)
 
 
 
