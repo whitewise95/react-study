@@ -198,3 +198,101 @@ table {
 
 
 
+
+
+<hr>
+
+<br>
+<br>
+
+
+# 03. React Hooks
+
+## 1 useState
+
+> 선언  
+
+```js
+const [state, setState] = useState(initialState);
+```  
+
+> 업데이트   
+```js
+// 기존에 사용하던 방식
+setState(number + 1);
+
+// 함수형 업데이트 
+setState(() => {});
+```  
+
+🛑 두 방식의 차이점
+- 일반 업데이트 방식으로 onClick안에서 setNumber(number + 1) 를 3번 호출해도 number가 1씩 증가한다.
+```js
+import { useState } from "react";
+
+const App = () => {
+  const [number, setNumber] = useState(0);
+  return (
+    <div>
+			{/* 버튼을 누르면 1씩 플러스된다. */}
+      <div>{number}</div> 
+      <button
+        onClick={() => {
+          setNumber(number + 1); // 첫번째 줄 
+          setNumber(number + 1); // 두번쨰 줄
+          setNumber(number + 1); // 세번째 줄
+        }}
+      >
+        버튼
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+- 함수형 업데이트 방식으로 동일하게 작동하면 number가 3씩 증가
+```js
+// src/App.js
+
+import { useState } from "react";
+
+const App = () => {
+  const [number, setNumber] = useState(0);
+  return (
+    <div>
+			{/* 버튼을 누르면 3씩 플러스 된다. */}
+      <div>{number}</div>
+      <button
+        onClick={() => {
+          setNumber((previousState) => previousState + 1);
+          setNumber((previousState) => previousState + 1);
+          setNumber((previousState) => previousState + 1);
+        }}
+      >
+        버튼
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
+🛑 왜  다르게 동작하나?
+**일반 업데이트 방식**은 버튼을 클릭했을 때 첫번째 줄 ~ 세번째 줄의 있는 setNumber가 각각 실행되는 것이 아니라, 배치(batch)로 처리한다. **즉 onClick을 했을 때 setNumber 라는 명령을 세번 내리지만, 리액트는 그 명령을 하나로 모아 최종적으로 한번만 실행**을 시킨다. 그래서 setNumber을 3번 명령하던, 100번 명령하던 1번만 실행됨    
+
+<br>   
+
+반면에 **함수형 업데이트 방식**은 **3번을 동시에 명령을 내리면, 그 명령을 모아 순차적으로 각각 1번씩 실행**시킨다.  0에 1더하고, 그 다음 1에 1을 더하고, 2에 1을 더해서 3이라는 결과값을 준다.  
+
+<br>   
+<br>   
+
+
+🛑  왜 리액트팀은 useState가 위 방식으로 동작하도록 만들었을까?
+> 공식문서에는 불필요한 리-렌더링을 방지(렌더링 최적화)하기 위해 즉, 리액트의 성능을 위해 한꺼번에 state를 업데이트 한다.
+
+
