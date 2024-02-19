@@ -428,3 +428,127 @@ export default App;
 - **의존성 배열을 통해 함수의 실행 조건을 제어**할 수 있다.
 - `useEffect` 에서 함수를 1번만 실행시키고자 할때는 **의존성 배열을 빈 배열**로 둔다.
 
+
+<hr>
+<br>
+<br>
+
+## 3 useRef
+> DOM 요소에 접근할 수 있도록 하는 React Hook 
+
+- HTML과 javascript를 사용했을 때 특정 DOM을 선택하기 위해서 다음과 같이 했었다.
+```js
+// (1) getElementById 이용
+const divTag = document.getElementById('#myDiv');
+
+// (2) querySelector 이용
+const divTag2 = document.querySelector('#myDiv');
+```
+
+#### 사용방법
+```js
+import "./App.css";
+import { useRef } from "react";
+
+function App() {
+  const ref = useRef("초기값");
+  console.log("ref", ref);
+
+  return (
+    <div>
+      <p>useRef에 대한 이야기에요.</p>
+    </div>
+  );
+}
+
+export default App;
+```  
+
+🛑 콘솔을 확인해보면, ref에는 값이 이렇게 담겨있어요.  
+> (중요) 이렇게 설정된 ref 값은 컴포넌트가 계속해서 렌더링 되어도 unmount 전까지 값을 유지  
+![alt text](image-4.png)  
+
+🛑 변경도 가능  
+```js
+import "./App.css";
+import { useRef } from "react";
+
+function App() {
+  const ref = useRef("초기값");
+  console.log("ref 1", ref);
+
+  ref.current = "바꾼 값";
+  console.log("ref 1", ref);
+
+  return (
+    <div>
+      <p>useRef에 대한 이야기에요.</p>
+    </div>
+  );
+}
+
+export default App;
+```  
+
+#### state와 ref의 차이점
+> state는 변경되면 렌더링이 되고, ref는 변경되면 렌더링이 안된다
+
+
+
+
+#### DOM 접근
+
+- 아이디, 패스워드 입력하는 ui 생성
+```js
+import "./App.css";
+
+function App() {
+  return (
+    <>
+      <div>
+        아이디 : <input type="text" />
+      </div>
+      <div>
+        비밀번호 : <input type="password" />
+      </div>
+    </>
+  );
+}
+
+export default App;
+```
+
+
+- 아이디에 포커싱 주기
+>     idRef.current.focus(); 사용
+```
+import { useEffect, useRef } from "react";
+import "./App.css";
+
+function App() {
+  const idRef = useRef("");
+
+  // 렌더링이 될 때
+  useEffect(() => {
+    idRef.current.focus();
+  }, []);
+
+  return (
+    <>
+      <div>
+        아이디 : <input type="text" ref={idRef} />
+      </div>
+      <div>
+        비밀번호 : <input type="password" />
+      </div>
+    </>
+  );
+}
+
+export default App;
+```
+
+
+
+
+
