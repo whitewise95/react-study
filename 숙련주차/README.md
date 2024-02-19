@@ -296,3 +296,135 @@ export default App;
 > 공식문서에는 불필요한 리-렌더링을 방지(렌더링 최적화)하기 위해 즉, 리액트의 성능을 위해 한꺼번에 state를 업데이트 한다.
 
 
+<br>
+<br>
+
+
+## 2 useState
+> useEffect는 리액트 컴포넌트가 렌더링될 때마다 특정 작업을 수행하도록 설정할 수 있는 Hook 이다. 즉, 어떤 컴포넌트가 화면에 보여졌을 때 내가 무언가를 실행하고 싶다면? 또는 어떤 컴포넌트가 화면에서 사라졌을 때 무언가를 실행하고 싶다면? useEffect를 사용한다.
+
+<br>
+
+#### 사용 방법
+```js
+import React, { useEffect } from "react";
+```  
+
+```js
+// src/App.js
+
+import React, { useEffect } from "react";
+
+const App = () => {
+
+  useEffect(() => {
+		// 이 부분이 실행된다.
+    console.log("hello useEffect");
+  });
+
+  return <div>Home</div>;
+}
+
+export default App;
+```  
+
+
+- 활용
+```js
+import React, { useEffect, useState } from "react";
+
+const App = () => {
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    console.log("hello useEffect");
+  });
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+<br>
+
+#### 의존성 배열
+> 배열에 값을 넣으면 그 값이 바뀔 때만 useEffect를 실행하게 된다.
+
+```js
+// useEffect의 두번째 인자가 의존성 배열이 들어가는 곳 입니다.
+useEffect(()=>{
+	// 실행하고 싶은 함수
+}, [의존성배열])
+```
+
+- 활용
+```js
+// src/App.js
+
+import React, { useEffect, useState } from "react";
+
+const App = () => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    console.log("hello useEffect");
+  }, [value]); // value를 넣음
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+<br>
+
+#### clean up
+> 이제 컴포넌트가 사라졌을 때 무언가를 실행하는 것 이 과정을 우리는 클린 업 (clean up) 이라고 표현
+
+```js
+// src/App.js
+
+import React, { useEffect } from "react";
+
+const App = () => {
+
+	useEffect(()=>{
+		// 화면에 컴포넌트가 나타났을(mount) 때 실행하고자 하는 함수를 넣어주세요.
+
+		return ()=>{
+			// 화면에서 컴포넌트가 사라졌을(unmount) 때 실행하고자 하는 함수를 넣어주세요.
+		}
+	}, [])
+
+	return <div>hello react!</div>
+};
+
+export default App;
+```
+<br>
+
+#### 정리 
+- `useEffect`는 화면에 컴포넌트가 mount 또는 unmount 됐을 때 실행하고자 하는 함수를 제어하게 해주는 훅이다.
+- **의존성 배열을 통해 함수의 실행 조건을 제어**할 수 있다.
+- `useEffect` 에서 함수를 1번만 실행시키고자 할때는 **의존성 배열을 빈 배열**로 둔다.
+
