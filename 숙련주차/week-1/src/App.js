@@ -1,30 +1,44 @@
-import { useEffect, useState } from 'react'
-import React from 'react'
+import { useEffect, useRef, useState } from "react";
+import "./App.css";
 
 function App() {
+  const idRef = useRef("");
+  const pwRef = useRef("");
 
-  const [value, setValue] = useState('');
+  const [id, setId] = useState("");
 
+  const onIdChangeHandler = (event) => {
+    setId(event.target.value);
+  };
+
+  // 렌더링이 될 때
   useEffect(() => {
-    console.log(`hello useEffect! : ${value}`);
+    idRef.current.focus();
+  }, []);
 
-    return () => {
-      console.log(" 나 사라져요");
+  // 왜 useEffect 안에 놓았을까요?
+  useEffect(() => {
+    if (id.length >= 10) {
+      pwRef.current.focus();
     }
-  }, [value])
+  }, [id]);
 
   return (
-    <div>
-      <input
-        type='text'
-        value={value}
-        onChange={(event => {
-          setValue(event.target.value)
-        })}
-      >
-      </input>
-    </div>
-  )
+    <>
+      <div>
+        아이디 :
+        <input
+          type="text"
+          ref={idRef}
+          value={id}
+          onChange={onIdChangeHandler}
+        />
+      </div>
+      <div>
+        비밀번호 : <input type="password" ref={pwRef} />
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;
