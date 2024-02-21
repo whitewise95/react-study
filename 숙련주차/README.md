@@ -520,8 +520,9 @@ export default App;
 
 
 - 아이디에 포커싱 주기
->     idRef.current.focus(); 사용
-```
+>     idRef.current.focus(); 사용 
+
+```js
 import { useEffect, useRef } from "react";
 import "./App.css";
 
@@ -548,6 +549,100 @@ function App() {
 export default App;
 ```
 
+
+
+
+
+
+<hr>
+<br>
+<br>
+
+
+## 4 useContext(Context API)  
+> props는 prop drilling 현상이 발생 => 그래서 등장한 것이 바로 react context API라는 것이구요. useContext hook을 통해 우리는 쉽게 전역 데이터를 관리할 수 있게 되었다.  
+
+```
+prop drilling의 문제점
+
+1. 깊이가 너무 깊어지면 이 prop이 어떤 컴포넌트로부터 왔는지 파악이 힘들다
+2. 어떤 컴포넌트에서 오류가 발생할 경우 추적이 힘들어지니 유지보수에 힘들다
+```
+
+
+#### context API 필수 개념  
+- `createContext` : context 생성  
+- `Consumer` : context 변화 감지  
+- `Provider` : context 전달(to 하위 컴포넌트)  
+
+
+#### FamilyContext.js, 및 여러 컴포넌트 생성  
+![alt text](image-5.png)  
+
+
+- GrandFather.jsx  
+```js
+import React from "react";
+import Father from "./Father";
+import { FamilyContext } from "../context/FamilyContext";
+
+function GrandFather() {
+  const houseName = "스파르타";
+  const pocketMoney = 10000;
+
+  return (
+    <FamilyContext.Provider value={{ houseName, pocketMoney }}>
+      <Father />
+    </FamilyContext.Provider>
+  );
+}
+
+export default GrandFather;
+```  
+
+-  Father.jsx
+```js
+import React from "react";
+import Child from "./Child";
+
+function Father() {
+  return <Child />;
+}
+
+export default Father;
+```
+
+
+- Child.jsx
+```js
+import React, { useContext } from "react";
+import { FamilyContext } from "../context/FamilyContext";
+
+function Child() {
+
+  const stressedWord = {
+    color: "red",
+    fontWeight: "900",
+  };
+
+  const data = useContext(FamilyContext);
+  console.log("data", data);
+
+  return (
+    <div>
+      나는 이 집안의 막내에요.
+      <br />
+      할아버지가 우리 집 이름은 <span style={stressedWord}>{data.houseName}</span>
+      라고 하셨어요.
+      <br />
+      게다가 용돈도 <span style={stressedWord}>{data.pocketMoney}</span>원만큼이나
+      주셨답니다.
+    </div>
+  );
+}
+
+export default Child;
+```  
 
 
 
