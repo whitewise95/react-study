@@ -12,9 +12,18 @@ const boxStyle = {
   alignItems: "center",
 };
 
-function Box1() {
-  console.log("Box1이 렌더링되었습니다.");
-  return <div style={boxStyle}>Box1</div>;
-}
+function Box1({ initCount }) {
+    console.log("Box1이 렌더링되었습니다.");
+  
+    const onInitButtonClickHandler = () => {
+      initCount();
+    };
+  
+    return (
+      <div style={boxStyle}>
+        <button onClick={onInitButtonClickHandler}>초기화</button>
+      </div>
+    );
+  }
 
 export default React.memo(Box1);

@@ -550,12 +550,6 @@ export default App;
 ```
 
 
-
-
-
-
-<hr>
-<br>
 <br>
 
 
@@ -570,15 +564,21 @@ prop drilling의 문제점
 ```
 
 
+<br>
+
 #### context API 필수 개념  
 - `createContext` : context 생성  
 - `Consumer` : context 변화 감지  
 - `Provider` : context 전달(to 하위 컴포넌트)  
 
+<br>
+
 
 #### FamilyContext.js, 및 여러 컴포넌트 생성  
 ![alt text](image-5.png)  
 
+
+<br>
 
 - GrandFather.jsx  
 ```js
@@ -600,6 +600,8 @@ function GrandFather() {
 export default GrandFather;
 ```  
 
+<br>
+
 -  Father.jsx
 ```js
 import React from "react";
@@ -612,6 +614,8 @@ function Father() {
 export default Father;
 ```
 
+
+<br>
 
 - Child.jsx
 ```js
@@ -642,7 +646,135 @@ function Child() {
 }
 
 export default Child;
-```  
+```   
+
+<br>
+
+
+GrandFather → Context(중앙 관리소) → Child 순서로 잘 전달이 됐다.
+
+🛑 useContext를 사용할 때, Provider에서 제공한 value가 달라진다면 useContext를 사용하고 있는 모든 컴포넌트가 리렌더링 된다. 따라서 value 부분을 항상 신경써줘야 함
+
+
+<hr>
+<br>
+<br>
+
+## 5 React.memo
+> memo(React.memo) : 컴포넌트를 캐싱
+- 리-렌더링의 발생 조건 중 3번째 경우. 즉, 부모 컴포넌트가 리렌더링 되면 자식컴포넌트는 모두 리렌더링 된다는 것은 그림으로 보면   
+- 1번 컴포넌트가 리렌더링 된 경우, 2~7번이 모두 리렌더링 된다.  
+- 4번 컴포넌트가 리렌더링 된 경우, 6, 7번이 모두 리렌더링 된다.  
+![alt text](image-6.png)  
+
+
+#### 사용법
+>  디렉토리 구성은 컴포넌트로 Box1 ~ 3 까지 있고 App.jsx에서 상태를 업데이트할 경우 하위 컴포넌트는 전부 리렌더링된다.
+![alt text](image-7.png)  
+
+
+> export default 이후에 React.mem를 감싸주면 해당 컴포넌트는 부모컴포넌트가 리렌더링 되더라도 리렌더링 되지 않습니다.  
+```js
+export default React.memo(Box1);
+export default React.memo(Box2);
+export default React.memo(Box3);
+```
+
+
+
+<hr>
+<br>
+<br>  
+
+
+## 6 useCallback
+> React.memo는 컴포넌트를 메모이제이션 했다면, useCallback은 인자로 들어오는 함수 자체를 메모이제이션 한다.
+
+
+#### 문제
+> Box1이 만일, count를 초기화 해 주는 코드라고 가정했을 때   
+
+- App.jsx
+```js
+
+	// count를 초기화해주는 함수
+  const initCount = () => {
+    setCount(0);
+  };
+
+  return (
+    <>
+      <h3>카운트 예제입니다!</h3>
+      <p>현재 카운트 : {count}</p>
+      <button onClick={onPlusButtonClickHandler}>+</button>
+      <button onClick={onMinusButtonClickHandler}>-</button>
+      <div style={boxesStyle}>
+        <Box1 initCount={initCount} />
+        <Box2 />
+        <Box3 />
+      </div>
+    </>
+  );
+}
+
+``` 
+​
+
+- Box1.jsx  
+```js
+
+function Box1({ initCount }) {
+  console.log("Box1이 렌더링되었습니다.");
+
+  const onInitButtonClickHandler = () => {
+    initCount();
+  };
+
+  return (
+    <div style={boxStyle}>
+      <button onClick={onInitButtonClickHandler}>초기화</button>
+    </div>
+  );
+}
+
+```
+
+```
++ 버튼이나, - 버튼을 누를 때 그리고 초기화 버튼을 누를 때 모두 
+App 컴포넌트와 Box1 컴포넌트가 리렌더링 되는 것을 볼 수 있다. 
+App.jsx가 리렌더링 되면서 코드가 다시 만들어지기 때문
+```
+![alt text](image-8.png)
+
+
+
+#### useCallback 사용법
+>  아래처럼 useCallback으로 감싸주면 ox1.jsx 컴포넌트는 리렌더링이 안된다.  
+```js
+// 변경 전
+const initCount = () => {
+  setCount(0);
+};
+
+// 변경 후
+const initCount = useCallback(() => {
+  setCount(0);
+}, []);
+
+
+// count가 업데이트 될 경우에는 리렌더링 해줘 라는 뜻이다.
+const initCount = useCallback(() => {
+  console.log(`[COUNT 변경] ${count}에서 0으로 변경되었습니다.`);
+  setCount(0);
+}, [count]);
+```
+
+
+
+
+
+
+
 
 
 
