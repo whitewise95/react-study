@@ -682,9 +682,9 @@ export default React.memo(Box3);
 
 
 
-<hr>
+
 <br>
-<br>  
+
 
 
 ## 6 useCallback
@@ -715,7 +715,6 @@ export default React.memo(Box3);
       </div>
     </>
   );
-}
 
 ``` 
 ​
@@ -770,12 +769,164 @@ const initCount = useCallback(() => {
 ```
 
 
+<br>
+
+## 7 useMemo
+>  처음 해당 값을 반환할 때 그 값을 메모리에 저장하고 이러한 기법을 캐싱을 한다. 라고 표현
 
 
 
+####  사용방법1
+
+- App.jsx
+```js
+import "./App.css";
+import HeavyComponent from "./components/HeavyComponent";
+
+function App() {
+  const navStyleObj = {
+    backgroundColor: "yellow",
+    marginBottom: "30px",
+  };
+
+  const footerStyleObj = {
+    backgroundColor: "green",
+    marginTop: "30px",
+  };
+
+  return (
+    <>
+      <nav style={navStyleObj}>네비게이션 바</nav>
+      <HeavyComponent />
+      <footer style={footerStyleObj}>푸터 영역이에요</footer>
+    </>
+  );
+}
+
+export default App;
+```  
+
+- components > HeavyComponent.jsx
+```js
+import React, { useState, useMemo } from "react";
+
+function HeavyButton() {
+  const [count, setCount] = useState(0);
+
+  const heavyWork = () => {
+    for (let i = 0; i < 1000000000; i++) {}
+    return 100;
+  };
+
+	// CASE 1 : useMemo를 사용하지 않았을 때
+  const value = heavyWork();
+
+	// CASE 2 : useMemo를 사용했을 때
+  // const value = useMemo(() => heavyWork(), []);
+
+  return (
+    <>
+      <p>나는 {value}을 가져오는 엄청 무거운 작업을 하는 컴포넌트야!</p>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        누르면 아래 count가 올라가요!
+      </button>
+      <br />
+      {count}
+    </>
+  );
+}
+
+export default HeavyButton;
+```
 
 
 
+####  사용방법2
+> useEffect hook을 이용해서 me의 정보가 바뀌었을 때만 발동되게끔 dependency array를 넣어놨지만 엉뚱하게도 count를 증가하는button을 눌러보면 계속 log가 찍히는 것을 볼 수가 있다.
 
+```js
+import React, { useEffect, useState } from "react";
+
+function ObjectComponent() {
+  const [isAlive, setIsAlive] = useState(true);
+  const [uselessCount, setUselessCount] = useState(0);
+
+  const me = {
+    name: "Ted Chang",
+    age: 21,
+    isAlive: isAlive ? "생존" : "사망",
+  };
+
+  useEffect(() => {
+    console.log("생존여부가 바뀔 때만 호출해주세요!");
+  }, [me]);
+
+  return (
+    <>
+      <div>
+        내 이름은 {me.name}이구, 나이는 {me.age}야!
+      </div>
+      <br />
+      <div>
+        <button
+          onClick={() => {
+            setIsAlive(!isAlive);
+          }}
+        >
+          누르면 살았다가 죽었다가 해요
+        </button>
+        <br />
+        생존여부 : {me.isAlive}
+      </div>
+      <hr />
+      필요없는 숫자 영역이에요!
+      <br />
+      {uselessCount}
+      <br />
+      <button
+        onClick={() => {
+          setUselessCount(uselessCount + 1);
+        }}
+      >
+        누르면 숫자가 올라가요
+      </button>
+    </>
+  );
+}
+
+export default ObjectComponent;
+```
+
+```
+**왜 그럴까요?**
+
+불변성과 관련이 있다.
+
+위 예제에서 버튼이 선택돼서 `uselessCount state`가 바뀌게 되면
+→ 리렌더링이 되죠
+→ 컴포넌트 함수가 새로 호출됩니다
+→ me 객체도 다시 할당해요(이 때, 다른 메모리 주소값을 할당받죠)
+→ useEffect의 dependency array에 의해 me 객체가바뀌었는지 확인해봐야 하는데
+→ 이전 것과 모양은 같은데 주소가 달라요!
+→ 리액트 입장에서는 me가 바뀌었구나 인식하고 useEffect 내부 로직이 호출됩니다.
+```
+
+- 해결법
+> useMemo를 활용하여 uselessCount가 아무리 증가돼도 영향이 없게 됩니다  
+> useMemo를 남발하게 되면 별도의 메모리 확보를 너무나 많이 하게 되기 때문에 오히려 성능이 악화될 수 있습니다. 필요할 때만 쓰기로 합시다 🙂
+
+```js
+const me = useMemo(() => {
+  return {
+    name: "Ted Chang",
+    age: 21,
+    isAlive: isAlive ? "생존" : "사망",
+  };
+}, [isAlive]);
+```
 
 
