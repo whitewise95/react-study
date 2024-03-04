@@ -930,3 +930,143 @@ const me = useMemo(() => {
 ```
 
 
+
+
+<hr>
+<br>
+<br>
+
+
+# 04. Redux 소개
+> “중앙 state 관리소”를 사용할 수 있게 도와주는 전역 상태 관리 라이브러리  
+> useState를 통해 상태를 관리했을 때 발생하는 불편함을 일부 해소 ex) props drilling...    
+
+
+<br>
+<br>
+
+### 특징
+- 리덕스는 **전역상태 관리 라이브러리**이다.
+- 리덕스는 **useState를 통해 상태를 관리했을 때 발생하는 불편함을 일부 해소**시켜준다.
+- 리덕스는 `중앙 State 관리소`를 가지고 있으며, 모든 State는 이곳에서 생성된다.
+- **useState로 생성한 State는 Local State**이고, **리덕스에서 생성한 State는 Global State**이다.
+
+
+<br>
+
+```
+- Local state (지역상태) 란?
+    - **컴포넌트에서 useState를 이용해서 생성한 state 입니다.** 좁은 범위 안에서 생성된 State 라고 생각하시면 됩니다.
+- Global state (전역상태)란?
+    - Global state는 컴포넌트에서 생성되지 않습니다.  중앙화 된 특별한 곳에서 State들이 생성됩니다. 좀 더 쉽게 얘기해서  “중앙 state 관리소” 라고 생각하면 됩니다.
+```
+
+
+
+<hr>
+<br>
+<br>
+
+
+# 05. Redux 설정
+
+### 리덕스 설치  
+> 리액트에서 리덕스를 사용하기 위해서는 2개의 패키지를 설치해야 한다.  
+   
+```  
+yarn add redux react-redux
+
+# 아래와 같은 의미
+yarn add redux
+yarn add react-redux
+```  
+
+<br>
+<br>
+
+
+### 폴더 구조 생성하기
+![alt text](image-9.png)
+
+이미지와 같이 폴더 구조를 생성하세요.  
+
+1. `src` 폴더 안에 `redux` 폴더를 생성
+2. `redux` 폴더 안에 `config`, `modules` 폴더를 생성
+3. `config` 폴더 안에 `configStore.js`파일을 생성합니다. 
+
+각각의 폴더와 파일은 역할이 있습니다.
+
+- `redux` : 리덕스와 관련된 코드를 모두 모아 놓을 폴더 입니다.
+- `config` : 리덕스 설정과 관련된 파일들을 놓을 폴더 입니다.
+- `configStore` : “중앙 state 관리소" 인 Store를 만드는 설정 코드들이 있는 파일 입니다.
+- `modules` : 우리가 만들 State들의 그룹이라고 생각하면 됩니다. 예를 들어 `투두리스트`를 만든다고 한다면, 투두리스트에 필요한 `state`들이 모두 모여있을 `todos.js`를 생성하게 되텐데요, 이  `todos.js` 파일이 곧 하나의 모듈이 됩니다.
+
+<br>
+<br>
+
+
+### src/configStore.js
+```js
+import { createStore } from "redux";
+import { combineReducers } from "redux";
+
+/*
+1. createStore()
+리덕스의 가장 핵심이 되는 스토어를 만드는 메소드(함수) 입니다. 
+리덕스는 단일 스토어로 모든 상태 트리를 관리한다고 설명해 드렸죠? 
+리덕스를 사용할 시 creatorStore를 호출할 일은 한 번밖에 없을 거예요.
+*/
+
+/*
+2. combineReducers()
+리덕스는 action —> dispatch —> reducer 순으로 동작한다고 말씀드렸죠? 
+이때 애플리케이션이 복잡해지게 되면 reducer 부분을 여러 개로 나눠야 하는 경우가 발생합니다. 
+combineReducers은 여러 개의 독립적인 reducer의 반환 값을 하나의 상태 객체로 만들어줍니다.
+*/
+
+const rootReducer = combineReducers({}); 
+const store = createStore(rootReducer); 
+
+export default store; 
+```  
+
+<br>
+<br>
+
+
+### index.js 
+```js
+// 원래부터 있던 코드
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+// 우리가 추가할 코드
+import store from "./redux/config/configStore";
+import { Provider } from "react-redux";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+
+	//App을 Provider로 감싸주고, configStore에서 export default 한 store를 넣어줍니다.
+  <Provider store={store}> 
+    <App />
+  </Provider>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
+<br>
+<br>
+
+
+### 정리 
+- 리액트에서 리덕스를 사용하려면, `redux`, `react-redux` 가 필요하다.
+- 설정코드는 지금 당장 이해 할 필요가 없다.
+- “중앙 State 관리소"를 Store (스토어)라고 부른다.
+- 모듈이란, State들이 그룹이다.
