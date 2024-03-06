@@ -1070,3 +1070,35 @@ reportWebVitals();
 - 설정코드는 지금 당장 이해 할 필요가 없다.
 - “중앙 State 관리소"를 Store (스토어)라고 부른다.
 - 모듈이란, State들이 그룹이다.
+
+
+
+<hr>
+<br>
+<br>
+
+# 06. Redux useSelecter
+
+## 1 modules 폴더에 counter.js 파일을 생성
+```js
+
+// 초기 상태값 (state)
+const initialState = {
+    number: 0
+}
+
+//리듀서 : state에 변화를 일으키는 함수
+// (1) : state를 action의 type에 따라 변경하는 함수
+//input : state와 action
+const counter = (state = initialState, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+}
+
+
+export default counter;
+```
+
+## 2
