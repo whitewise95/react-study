@@ -1,5 +1,5 @@
-const PLUS_ONE = 'ounter/PLUS_ONE';
-const MINUNS_ONE = 'counter/MINUNS_ONE';
+const PLUS_N = 'ounter/PLUS_N';
+const MINUNS_N = 'counter/MINUNS_N';
 
 
 // 초기 상태값 (state)
@@ -7,15 +7,23 @@ const initialState = {
     number: 0
 }
 
-export const plusOne = () => {
+export const plusN = (payload) => {
+    if (payload === 0){
+        payload = payload + 1;
+    } 
     return {
-        type: PLUS_ONE
+        type: PLUS_N,
+        payload
     }
 }
 
-export const minunsOne = () => {
+export const minunsN = (payload) => {
+    if (payload === 0){
+        payload = payload - 1;
+    } 
     return {
-        type: MINUNS_ONE
+        type: MINUNS_N,
+        payload
     }
 }
 
@@ -25,13 +33,13 @@ export const minunsOne = () => {
 //input : state와 action
 const counter = (state = initialState, action) => {
     switch (action.type) {
-        case PLUS_ONE:
+        case PLUS_N:
             return {
-                number: state.number + 1
+                number: state.number + action.payload
             }
-        case MINUNS_ONE:
+        case MINUNS_N:
             return {
-                number: state.number - 1
+                number: state.number + action.payload
             }
         default:
             return state;
