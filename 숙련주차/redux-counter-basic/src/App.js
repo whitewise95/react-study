@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { plusOne, minunsOne } from "./redux/modules/counter";
 
 function App() {
   const counter = useSelector((state) => {
@@ -14,14 +15,10 @@ function App() {
     <div>
       <div>현재 카운터 : {counter.number}</div>
       <button onClick={() => {
-        dispatch({
-          type: 'PLUS_ONE',
-        })
+        dispatch(plusOne())
       }}>+</button>
       <button onClick={() => {
-        dispatch({
-          type: 'MIUNS_ONE',
-        })
+        dispatch(minunsOne())
       }}>-</button>
     </div>
   );
