@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { plusOne, minunsOne } from "./redux/modules/counter";
+import { plusN, minunsN } from "./redux/modules/counter";
+import { useState } from "react";
 
 function App() {
+
+ const [number, setNumber] = useState(0);
+
   const counter = useSelector((state) => {
     return state.counter;
   })
@@ -14,11 +18,18 @@ function App() {
   return (
     <div>
       <div>현재 카운터 : {counter.number}</div>
+      <input 
+      type='number'
+      value={number}
+      onChange={(event) => {
+          setNumber(event.target.value);
+      }}
+      ></input>
       <button onClick={() => {
-        dispatch(plusOne())
+        dispatch(plusN(+number))
       }}>+</button>
       <button onClick={() => {
-        dispatch(minunsOne())
+        dispatch(minunsN(-number))
       }}>-</button>
     </div>
   );
