@@ -1383,3 +1383,164 @@ ex2 )
 
 (외부 라이브러리로서 사용될 경우 또는 외부 라이브러리가 필요로 할 경우에는 UPPER_SNAKE_CASE 로만 작성해도 괜찮다.)  
 그래서 모듈 파일 1개에 `Action Type`, `Action Creator`, `Reducer` 가 모두 존재하는 작성방식입니다.  
+
+
+<hr>
+<br>
+<br>
+
+
+# [10]. React Router Dom
+
+## 1. react-router-dom이란?
+> 페이지를 구현할 수 있게 해주는 패키지 
+
+<br>
+
+## 2 react-router-dom 설치하기    
+> vscode 터미널에서 아래 코드를 입력  
+```
+yarn add react-router-dom 
+```  
+
+<br>
+
+## 3 react-router-dom 사용  
+- `src` 폴더에 `pages` 라는 폴더를 만들고 그 안 가상의 여러 페이지 생성  
+![alt text](image-11.png)  
+
+
+<br>
+
+
+### 📍 src/shared/Router.js 생성   
+![alt text](image-10.png)    
+
+```js  
+import React from "react";
+// 1. react-router-dom을 사용하기 위해서 아래 API들을 import 합니다.
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Works from "../pages/Works";
+
+// 2. Router 라는 함수를 만들고 아래와 같이 작성합니다.
+//BrowserRouter를 Router로 감싸는 이유는, 
+//SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+       {/* 
+						Routes안에 이렇게 작성합니다. 
+						Route에는 react-router-dom에서 지원하는 props들이 있습니다.
+
+						path는 우리가 흔히 말하는 사용하고싶은 "주소"를 넣어주면 됩니다.
+						element는 해당 주소로 이동했을 때 보여주고자 하는 컴포넌트를 넣어줍니다.
+				 */}
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="works" element={<Works />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;
+```  
+
+<br>
+
+
+###  📍 App.js에 Router.js  import 해주기
+```js
+import React from "react";
+import Router from "./shared/Router";
+
+function App() {
+  return <Router />;
+}
+
+export default App;
+```
+
+
+
+<br>
+
+## 4. react-router-dom Hooks
+
+
+### 📍 useNavigate
+> avigate 를 생성하고, navigate(’보내고자 하는 url’) 을 통해 페이지를 이동  
+
+```js
+// src/pages/home.js
+import { useNavigate } from "react-router-dom";
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  return (
+    <button
+      onClick={() => {
+        navigate("/works");
+      }}
+    >
+      works로 이동
+    </button>
+  );
+};
+
+export default Home;
+```
+
+<br>
+
+### 📍 useLocation  
+>  페이지의 여러가지 정보를 추가적으로 얻을 수 있다.  
+```js
+// src/pages/works.js
+import { useLocation } from "react-router-dom";
+
+const Works = () => {
+  const location = useLocation();
+  console.log("location :>> ", location);
+  return (
+    <div>
+      <div>{`현재 페이지 : ${location.pathname.slice(1)}`}</div>
+    </div>
+  );
+};
+
+export default Works;
+```  
+
+### 📍 Link
+> Link 는 html 태그중에 a 태그의 기능을 대체하는 API   
+
+<hr>  
+
+만약 JSX에서 a 태그를 사용해야 한다면, 반드시 Link 를 사용해서 구현해야 합니다. 왜냐하면 a 태그를 사용하면  페이지를 이동하면서 브라우저가 새로고침(refresh)되기 때문입니다. 브라우저가 새로고침 되면 모든 컴포넌트가 다시 렌더링되야 하고, 또한 우리가 리덕스나 useState를 통해 메모리상에 구축해놓은 모든 상태값이 초기화 됩니다. 이것은 곧 성능에 악역향을 줄 수 있고, 불필요한 움직임입니다.
+
+<hr>
+
+
+```js
+import { Link, useLocation } from 'react-router-dom';
+
+const Works = () => {
+  const location = useLocation();
+  console.log('location :>> ', location);
+  return (
+    <div>
+      <div>{`현재 페이지 : ${location.pathname.slice(1)}`}</div>
+      <Link to="/contact">contact 페이지로 이동하기</Link>
+    </div>
+  );
+};
+
+export default Works;
+```
