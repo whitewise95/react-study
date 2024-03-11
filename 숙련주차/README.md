@@ -1521,12 +1521,13 @@ export default Works;
 ### 📍 Link
 > Link 는 html 태그중에 a 태그의 기능을 대체하는 API   
 
+<br>
 <hr>  
 
 만약 JSX에서 a 태그를 사용해야 한다면, 반드시 Link 를 사용해서 구현해야 합니다. 왜냐하면 a 태그를 사용하면  페이지를 이동하면서 브라우저가 새로고침(refresh)되기 때문입니다. 브라우저가 새로고침 되면 모든 컴포넌트가 다시 렌더링되야 하고, 또한 우리가 리덕스나 useState를 통해 메모리상에 구축해놓은 모든 상태값이 초기화 됩니다. 이것은 곧 성능에 악역향을 줄 수 있고, 불필요한 움직임입니다.
 
 <hr>
-
+<br>
 
 ```js
 import { Link, useLocation } from 'react-router-dom';
@@ -1544,3 +1545,195 @@ const Works = () => {
 
 export default Works;
 ```
+
+<br>
+<br>
+
+
+### 📍 children 용도
+> 공식 문서에는 props.children에 대해 아래와 같이 설명하고 있습니다.
+
+<aside>
+💡 어떤 컴포넌트들은 어떤 자식 엘리먼트가 들어올지 미리 예상할 수 없는 경우가 있습니다. **범용적인 ‘박스’ 역할**을 하는 Sidebar 혹은 Dialog와 같은 컴포넌트에서 특히 자주 볼 수 있습니다
+</aside>  
+
+
+- src/shared/Layout.js  
+```js 
+// src/shared/Layout.js
+
+import React from 'react';
+
+const HeaderStyles = {
+  width: '100%',
+  background: 'black',
+  height: '50px',
+  display: 'flex',
+  alignItems: 'center',
+  paddingLeft: '20px',
+  color: 'white',
+  fontWeight: '600',
+};
+const FooterStyles = {
+  width: '100%',
+  height: '50px',
+  display: 'flex',
+  background: 'black',
+  color: 'white',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '12px',
+};
+
+const layoutStyles = {
+  display: 'flex',
+	flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: '90vh',
+}
+
+function Header() {
+  return (
+    <div style={{ ...HeaderStyles }}>
+      <span>Sparta Coding Club - Let's learn React</span>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div style={{ ...FooterStyles }}>
+      <span>copyright @SCC</span>
+    </div>
+  );
+}
+
+
+function Layout({ children }) {
+  return (
+    <div>
+      <Header />
+      <div style={{...layoutStyles}}>
+        {children}
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+export default Layout;
+```  
+
+- src/shared/Router.js  
+```js
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from '../pages/Home';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import Works from '../pages/Works';
+import Layout from './Layout';
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="works" element={<Works />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+};
+
+export default Router;
+```    
+
+![alt text](image-12.png)  
+
+<br>
+<br>
+
+
+### 📍 Dynamic Route
+> Dynamic Route란, 동적 라우팅이라고도 말하는데 path에 유동적인 값을 넣어서 특정 페이지로 이동하게끔 구현하는 방법  
+
+- src/pages/Works.js 생성  
+```js
+// src/pages/Works.js
+
+import React from "react";
+
+const Works = () => {
+  return <div>Works</div>;
+};
+
+export default Work;
+```  
+
+
+<br>
+
+- Router.js 이동해서 아래 코드를 추가  - `:id 라는 것이 바로 동적인 값을 받겠다라는 의미`  
+
+```js
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Works from "../pages/Works";
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="works" element={<Works />} />
+				{/* 아래 코드를 추가해주세요. 👇 */}
+        <Route path="works/:id" element={<Works />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;
+```  
+
+<br>
+<br>
+
+### 📍  useParam
+> useParams 은 path의 있는 id 값을 조회할 수 있게 해주는 훅 입니다  
+```js
+// src/pages/Work.js
+
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+const data = [
+  { id: 1, todo: '리액트 배우기' },
+  { id: 2, todo: '노드 배우기' },
+  { id: 3, todo: '자바스크립트 배우기' },
+  { id: 4, todo: '파이어 베이스 배우기' },
+  { id: 5, todo: '넥스트 배우기' },
+  { id: 6, todo: 'HTTP 프로토콜 배우기' },
+];
+
+function Work() {
+  const param = useParams();
+
+  const work = data.find((work) => work.id === parseInt(param.id));
+
+  return <div>{work.todo}</div>;
+}
+
+export default Work;
+```  
+
