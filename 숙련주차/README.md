@@ -1079,6 +1079,8 @@ reportWebVitals();
 
 # 06. Redux useSelecter
 
+<br>
+
 ## 1 modules 폴더에 counter.js 파일을 생성
 ```js
 
@@ -1099,4 +1101,73 @@ const counter = (state = initialState, action) => {
 
 
 export default counter;
+
 ```
+
+<br>
+
+🛑 모듈의 구성요소 알아보기
+
+- 1-1 초기 상태값
+이것은 initialState 입니다. 단어 그대로 초기 상태값 입니다. 즉, 어떤 State의 초기값을 정해주는 것 입니다. 우리가 useState를 사용했을 때 괄호 안에 초기값을 지정해주던 것과 같은 이치입니다.   
+```js
+  // 초기 상태값
+const initialState = {
+  number: 0,
+};
+```    
+
+- 1-2 Reducer  
+리듀서란, 변화를 일으키는 함수입니다. action에 type으로 어떤 동작을 이르키는 함수 입니다.
+```js
+// 리듀서 
+const counter = (state = initialState, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+```
+
+
+## 2 스토어에 연결
+- configStore.js로 이동 해서 counter를 추가한다.
+```js
+// 새롭게 추가한 부분
+import counter from "../modules/counter";
+
+const rootReducer = combineReducers({
+  counter: counter, // <-- 새롭게 추가한 부분
+});
+```
+
+<br>
+<br>
+
+## 3 App.js 컴포넌트에서 확인
+```JS
+// src/App.js
+
+import React from "react";
+import { useSelector } from "react-redux"; // import 해주세요.
+
+const App = () => {
+  const counterStore = useSelector((state) => state); // 추가해주세요.
+  console.log(counterStore); // 스토어를 조회해볼까요?
+
+  return <div></div>;
+}
+
+export default App;
+```
+![image](https://github.com/whitewise95/ReactStudy/assets/81284265/f5b3e90f-f877-4886-9000-390032faa004)
+
+
+🛑 number에 접근하기  
+```JS
+const number = useSelector(state => state.counter.number); // 0
+```  
+
+<hr>
+<br>
+<br>
