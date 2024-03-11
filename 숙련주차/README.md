@@ -1077,7 +1077,7 @@ reportWebVitals();
 <br>
 <br>
 
-# 06. Redux useSelecter 및 dispatch
+# [06]. Redux useSelecter 및 dispatch
 
 <br>
 
@@ -1265,3 +1265,76 @@ export default counter;
   - dispatch 라는 함수에는 액션을 파라미터로 전달합니다.. dispatch(action) 이런식으로 말이죠.
 ```  
 - 액션객체 type의 value는 대문자로 작성한다. (JS에서 상수는 대문자로 작성하는 룰이 있음)  
+
+
+
+
+
+<hr>  
+<br>
+<br>
+
+
+# [07]. Action Creator
+
+<br>
+
+## 1 Action Creator 란?
+
+>  액션객체를 한 곳에서 관리할 수 있도록 “함수"와 액션 value를 상수만들어 둔 함수
+```js
+const PLUS_ONE = "PLUS_ONE"; // value는 상수로 생성
+
+// 액션객체를 반환하는 함수 생성
+// export 가 붙는 이유는 plusOne()는 밖으로 나가서 사용될 예정이기 때문입니다.
+export const plusOne = () => { 
+  return {
+    type: PLUS_ONE, // type에는 위에서 만든 상수로 사용 (vscode에서 자동완성 지원)
+  };
+};
+```
+
+> 더이상 ` dispatch({ type: "PLUS_ONE" });` 이렇게 쓸 필요없이 함수를 사용해 dispatch로 전달할 수 있다.  
+```js
+ return (
+    <div>
+      {number}
+      <button
+        onClick={() => {
+          dispatch(plusOne()); // 액션객체를 Action creator로 변경합니다.
+        }}
+      >
+        + 1
+      </button>
+      {/* 빼기 버튼 추가 */}
+      <button
+        onClick={() => {
+          dispatch(minusOne()); // 액션객체를 Action creator로 변경합니다.
+        }}
+      >
+        - 1
+      </button>
+    </div>
+  );
+};
+```
+
+<br>
+<br>
+
+
+## 2 Action Creator 를 왜 사용할까?
+- 휴먼에러 (오타) 방지
+- 유지보수의 효율성 증가
+- 코드 가독성 
+- 리덕스 공식문서에서 소개되고 있는 방법
+
+<br>
+
+## 3 정리  
+- 액션객체를 만드는 함수를 `Action Creator`(액션 크리에이터)라고 한다.
+- `Action Creator`는 모듈 파일안에서 생성된다.
+- 액션객체의 type value로 상수로 생성해서 관리한다.
+- `Action Creator`를 사용하면, 여러가지 문제점을 해소할 수 있다.  
+
+
