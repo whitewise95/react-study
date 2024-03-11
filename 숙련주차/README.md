@@ -1077,7 +1077,7 @@ reportWebVitals();
 <br>
 <br>
 
-# 06. Redux useSelecter
+# 06. Redux useSelecter 및 dispatch
 
 <br>
 
@@ -1171,3 +1171,97 @@ const number = useSelector(state => state.counter.number); // 0
 <hr>
 <br>
 <br>
+
+
+## 4 리덕스의 흐름 도식화  
+
+![alt text](./addfile.gif)  
+
+1. View 에서 액션이 일어난다.
+2. dispatch 에서 action이 일어나게 된다.
+3. action에 의한 reducer 함수가 실행되기 전에 middleware가 작동한다.
+4. middleware 에서 명령내린 일을 수행하고 난뒤, reducer 함수를 실행한다. (3, 4번은 아직 몰라도 됩니다!)
+5. reducer 의 실행결과 store에 새로운 값을 저장한다.
+6. store의 state에 subscribe 하고 있던 UI에 변경된 값을 준다.
+출처 : https://velog.io/@annahyr/리덕스-흐름-이해하기   
+
+
+<br>
+<br>
+
+## dispatch 사용하기  
+- `useDispatch();` 함수를 사용해서 dispatch를 사용할 수 있다.  
+
+> 예시  디스패치를 이용해서 액션객체를 리듀서로 보낼 수 있습니다.
+```js
+import React from "react";
+import { useDispatch } from "react-redux"; // import 해주세요.
+
+const App = () => {
+  const dispatch = useDispatch(); // dispatch 생성
+  return (
+    <div>
+      <button
+				// 이벤트 핸들러 추가
+        onClick={() => {
+					// 마우스를 클릭했을 때 dispatch가 실행되고, ()안에 있는 액션객체가 리듀서로 전달된다.
+          dispatch({ type: "PLUS_ONE" }); 
+        }}
+      >
+				+ 1
+      </button>
+    </div>
+  );
+};
+
+export default App;
+```  
+
+> 리듀서에서 type이 PLUS_ONE 일 경우로 핸들링해준다. 
+```js
+// src/modules/counter.js
+
+// 초기 상태값
+const initialState = {
+  number: 0,
+};
+
+// 리듀서
+const counter = (state = initialState, action) => {
+  console.log(action);
+  switch (action.type) {
+		// PLUS_ONE이라는 case를 추가한다.
+		// 여기서 말하는 case란, action.type을 의미한다.
+		// dispatch로부터 전달받은 action의 type이 "PLUS_ONE" 일 때
+		// 아래 return 절이 실행된다. 
+    case "PLUS_ONE":
+      return {
+				// 기존 state에 있던 number에 +1을 더한다.
+        number: state.number + 1,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// 모듈파일에서는 리듀서를 export default 한다.
+export default counter;
+```
+
+  
+<br>
+<br>
+
+
+## 정리
+- 액션객체란, 반드시 type이란 key를 가져야 하는 객체이다. 또한 리듀서로 보낼 “명령"이다.  
+- 디스패치란, 액션객체를 리듀서로 보내는 “전달자” 함수이다.  
+- 리듀서란, 디스패치를 통해 전달받은 액션객체를 검사하고, 조건이 일치했을 때 새로운 상태값을 만들어내는 “변화를 만들어내는" 함수이다.  
+- 디스패치(dispatch)를 사용하기위해서는 useDispatch() 라는 훅을 이용해야 한다.    
+```  
+  - 디스패치는 스토어의 내장함수 중 하나입니다.
+  - 우선, 디스패치는 액션을 발생 시키는 것 정도로 이해하시면 됩니다.
+  - dispatch 라는 함수에는 액션을 파라미터로 전달합니다.. dispatch(action) 이런식으로 말이죠.
+```  
+- 액션객체 type의 value는 대문자로 작성한다. (JS에서 상수는 대문자로 작성하는 룰이 있음)  
