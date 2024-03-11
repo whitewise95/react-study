@@ -1338,3 +1338,48 @@ export const plusOne = () => {
 - `Action Creator`를 사용하면, 여러가지 문제점을 해소할 수 있다.  
 
 
+
+<hr>
+<br>
+<br>
+
+# [08]. Payload
+
+## 1.Payload란?
+> React에서 “payload”는 일반적으로 액션(action) 객체 내에 전달되는 데이터를 의미  
+
+ex1 )   
+
+```js
+{type: "ADD_NUMBER", payload: 10} // type뿐만 아니라 payload라는 key와 value를 같이 담는다.
+```  
+
+ex2 )
+```js
+{
+  type: 'ADD_TODO',
+  payload: {
+    id: 1,
+    text: 'Buy milk',
+    completed: false
+  }
+}
+```  
+
+<hr>
+<br>
+<br>
+
+# [09]. Ducks 패턴
+
+## 1. Ducks 패턴이란?
+> 리덕스를 사용하기 위해서는 결국 우리가 리덕스의 구성요소를 모두 만들어야만 사용이 가능합니다. Erik Rasmussn 라는 개발자가 이것을 패턴화하여 작성하는 것을 제안했는데, 그것이 바로 Ducks패턴이다.    
+
+
+🛑 `**Erik Rasmussen` 이 제안한 Ducks 패턴은 아래의 내용을 지켜 모듈을 작성하는 것 입니다.**  
+1. Reducer 함수를 `export default` 한다.
+2. Action creator 함수들을 `export` 한다.
+3. Action type은 `app/reducer/ACTION_TYPE` 형태로 작성한다.  
+
+(외부 라이브러리로서 사용될 경우 또는 외부 라이브러리가 필요로 할 경우에는 UPPER_SNAKE_CASE 로만 작성해도 괜찮다.)  
+그래서 모듈 파일 1개에 `Action Type`, `Action Creator`, `Reducer` 가 모두 존재하는 작성방식입니다.  
