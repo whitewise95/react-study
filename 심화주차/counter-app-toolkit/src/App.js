@@ -20,8 +20,8 @@ function App() {
         onChange={(event) => {
           setNumber(event.target.value)
         }} />
-      <button onClick={() => { dispatch(plusN(parseInt(number))) }}>+</button>
-      <button onClick={() => { dispatch(minusN(parseInt(number))) }}>-</button>
+      <button onClick={() => { dispatch(plusN(parseInt(number)))}}>+</button>
+      <button onClick={() => { dispatch(minusN(parseInt(number)))}}>-</button>
     </div>
   )
 }
