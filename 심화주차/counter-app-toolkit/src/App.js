@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { plusN, minusN } from './redux/modules/counter'
 import { useDispatch, useSelector } from 'react-redux'
+import { _addNumber, _miunsNumber } from './redux/modules/counter';
 
 function App() {
   const [number, setNumber] = useState(1);
@@ -20,8 +20,8 @@ function App() {
         onChange={(event) => {
           setNumber(event.target.value)
         }} />
-      <button onClick={() => { dispatch(plusN(parseInt(number)))}}>+</button>
-      <button onClick={() => { dispatch(minusN(parseInt(number)))}}>-</button>
+      <button onClick={() => { dispatch(_addNumber(parseInt(number)))}}>+</button>
+      <button onClick={() => { dispatch(_miunsNumber(parseInt(number)))}}>-</button>
     </div>
   )
 }
