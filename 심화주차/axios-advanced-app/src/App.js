@@ -1,5 +1,6 @@
-import axios from 'axios'
+import api from "./asiox/api"
 import React, { useEffect, useState } from 'react'
+
 
 function App() {
   const [todos, setTodos] = useState(null);
@@ -11,37 +12,29 @@ function App() {
 
 
   const fetchTodos = async () => {
-    const { data } = await axios.get("http://localhost:4000/todos");
+    const { data } = await api.get(`/todos`);
     console.log(data);
     setTodos(data);
   }
 
   const onSubmitHandler = async () => {
-    const { data } = await axios.post("http://localhost:4000/todos", inputValue);
+    const { data } = await api.post(`/todos`, inputValue);
     setTodos([...todos, { id: data.id, title: data.title }])
   }
 
   const onDeleteClickHadler = async (targetId) => {
-    axios.delete(`http://localhost:4000/todos/${targetId}`);
+    api.delete(`/todos/${targetId}`);
     setTodos(todos.filter((item) => {
       return item.id !== targetId;
     }))
   }
 
   const onFetchClickHandler = async () => {
-    await axios.patch(`http://localhost:4000/todos/${id}`, {
+    await api.patch(`/todos/${id}`, {
       title
     })
 
     fetchTodos();
-    // setTodos(
-    //   setTodos(todos.filter((item) => {
-    //     if (item.id === id) {
-    //       item.title = title;
-    //     }
-    //     return item;
-    //   }))
-    // )
   }
 
   useEffect(() => {
