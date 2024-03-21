@@ -103,7 +103,8 @@ const todosSlice= createSlice({
     },
     switchTodo: (state, action) => {
       return state.map((item) => {
-        if (item.id === action.payload) {
+        debugger
+        if (item.id == action.payload) {
           return { ...item, isDone: !item.isDone };
         } else {
           return item;
