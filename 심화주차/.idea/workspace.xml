@@ -20,6 +20,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "yarn",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -32,6 +33,7 @@
       <option name="presentableId" value="Default" />
       <updated>1710996197109</updated>
       <workItem from="1710996198659" duration="10000" />
+      <workItem from="1711101379316" duration="22000" />
     </task>
     <servers />
   </component>
