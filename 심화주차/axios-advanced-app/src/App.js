@@ -30,6 +30,7 @@ function App() {
   }
 
   const onFetchClickHandler = async () => {
+    debugger
     await api.patch(`/todos/${id}`, {
       title
     })

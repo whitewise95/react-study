@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}`,
-    timeout: 1
+    baseURL: `${process.env.REACT_APP_SERVER_URL}`
 });
 
 
@@ -24,13 +23,13 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     //응답을 내보내기 전 수행되는 함수
-    function (response) { 
+    function (response) {
         console.log("인터셉터 응답 성공 ! ");
         return response;
     },
 
     //오류 응답을 내보내기 전 수행되는 함수
-    function (error) { 
+    function (error) {
         console.log("인터셉터 응답 실패! ");
         return Promise.reject(error);
     }
