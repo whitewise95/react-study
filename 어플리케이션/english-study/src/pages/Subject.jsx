@@ -1,10 +1,10 @@
 import React from 'react';
-import {test} from "../fireBase/SentenceFireBase";
+// import {test} from "../fireBase/SentenceFireBase";
 
 const Subject = () => {
 
     const test2 = () => {
-        test()
+        // test()
     }
 
 
