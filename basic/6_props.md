@@ -92,7 +92,7 @@ function Component1({ title }){
 ​
 훨씬 간단하고 짧아졌습니다. 만약 여러개의 props를 받는다면, { } 안에 여러개의 props를 그대로 써주면 됩니다. 
 ```jsx
-function Component1({ title }){
+function Component1({ title, body, isDone, id }){
 	return <div>{title}</div>
 }
 ```
