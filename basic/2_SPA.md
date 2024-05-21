@@ -1,10 +1,4 @@
-# 1. 목표  
-- MPA와 SPA의 차이를 설명할 수 있습니다.
-- 바닐라 JS로 SPA를 만들 때 Hashed Routing이 필요한 이유를 설명할 수 있습니다.
-- 공유된 코드를 참조하여 JS로 SPA Routing을 구현할 수 있습니다.
-
-
-# 2. MPA와 SSR에 대해  
+# 1. MPA와 SSR에 대해  
 
 **MPA(Multi Page Application)란**  
 2개 이상의 페이지(html)로 구성된 애플리케이션을 의미합니다.
@@ -15,7 +9,7 @@ SSR(Server Side Rendering)은 초기 화면 로딩 시 서버에서 완성된 HT
 
 
 
-# 3. SPA와 CSR에 대해  
+# 2. SPA와 CSR에 대해  
 **SPA(Single Page Application)란**  
 SPA(Single Page Application)이란, 하나의 html 페이지로 이루어진 애플리케이션을 의미합니다. 전통적인 MPA가 가지는 불편함(깜빡거림, 렌더링 속도 등) 때문에 등장하게 되었습니다.
 > 최초에 서버로부터 로드된 하나의 웹 페이지만 유지되며, 이 페이지는 사용자와의 상호작용에 따라 필요한 데이터만을 서버로부터 받아와서 동적으로 내용을 변경합니다.
@@ -24,7 +18,7 @@ SPA(Single Page Application)이란, 하나의 html 페이지로 이루어진 애
 **CSR(Client Side Rendering)란**  
 서버 측이 아닌 클라이언트(브라우저)에서 데이터를 기반으로 렌더링했다. 라는 의미에서 CSR(=Client Side Rendering)이라고 합니다.  
 
-# 4. 어떤 걸 사용해야하지? (출처 : [Dev. Ella](https://dev-ellachoi.tistory.com/28))
+# 3. 어떤 걸 사용해야하지? (출처 : [Dev. Ella](https://dev-ellachoi.tistory.com/28))
 ![dn463786 wasson_figure2_hires(en-us,msdn 10)](https://github.com/whitewise95/react-study/assets/81284265/e0ba11a1-776a-419b-a2d7-1c51de0a7ff2)
 
 **일반적으로는**  
