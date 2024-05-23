@@ -8,7 +8,7 @@
 
 # 2. 사용방법
 
-🟢 기본사용법
+🟢 기본사용법
 > `useRef()` 소괄호 안에 값을 넣어 변수에 할당할 수 있다.
 ```jsx
   const ref = useRef("초기값");
@@ -16,7 +16,7 @@
 ```
 
 🟢 값을 변경하거나 사용하고 싶을 때 
-> ref를 콘솔로 찍어보면 current에 담겨 있기 때문에 `ref.current` 로 그 값이 도달할 수 있다.  
+> ref를 콘솔로 찍어보면 current에 담겨 있기 때문에 `ref.current` 로 그 값이 도달할 수 있다.  
 > 이렇게 설정된 ref 값은 컴포넌트가 계속해서 렌더링 되어도 unmount 전까지 값을 유지
 <img width="251" alt="image" src="https://github.com/whitewise95/react-study/assets/81284265/4253b89b-1baf-428d-8168-aa0f1ba63c0d">
 
