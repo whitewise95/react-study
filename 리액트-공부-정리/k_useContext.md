@@ -58,7 +58,7 @@ function GrandFather() {
   return (
     <Context.Provider value={{ houseName, pocketMoney }}>   {/* ✅  Context의 Provider에 houseName, pocketMoney를 셋팅 한다.*/}
       <Father />
-    </FamilyContext.Provider>
+    </Context.Provider>
   );
 }
 
