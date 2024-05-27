@@ -93,3 +93,60 @@ export default Works;
  <Link to="/contact">contact 페이지로 이동하기</Link>
 ```
 
+
+# 4. Dynamic Route
+> detail/:id 라고 path가 들어갑니다. :id 라는 것이 바로 동적인 값을 받겠다라는 의미
+```jsx
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Detail from "../pages/Detail";
+import Home from "../pages/Home";
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="detail/:id" element={<Detail />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;  
+```
+
+### **useParams**  
+> 동적라우팅으로 받은 파라미터를 받을 수 있다.
+```jsx
+  const param = useParams();
+  console.log(param.id)
+```
+
+
+# 5. 중첩된 라우트
+- 중첩 라우팅은 특정 라우트 내에서 추가적인 라우트를 정의하는 방식을 말합니다. 웹 애플리케이션에서 여러 계층의 UI를 구성할 때 유용하게 사용돼요. 를 들어, 사용자 대시보드에 여러 섹션이 있는 경우 각 섹션 별로 다른 경로를 설정할 수 있습니다.
+- /dashboard 경로는 DashboardLayout 컴포넌트를 사용합니다. 이 레이아웃 내에서 /dashboard/settings, /dashboard/reports 등의 경로로 추가적인 페이지들을 중첩하여 설정할 수 있습니다. 이렇게 함으로써, 대시보드 내 각 섹션의 독립적인 라우트 관리가 가능하며, UX(사용자 경험)을 개선할 수 있습니다.
+  
+```jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import DashboardLayout from './DashboardLayout';
+import Profile from './Profile';
+import Settings from './Settings';
+import Reports from './Reports';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="reports" element={<Reports />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
