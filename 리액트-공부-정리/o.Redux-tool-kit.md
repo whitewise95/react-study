@@ -133,6 +133,7 @@ export default store;
 - Action Value와 Action Creator를 이제 직접 생성해주지 않고, Action Value, Action Creator, Reducer가 하나로 합쳐짐
 - `src/redux/moduls` => `src/redux/slices` 로 경로 변경
 - creater 대신에 counterSlice의 `reducers를 export`
+- 기존의 combineReducers + createStore 조합이 configureStore로 대체
 
 
 
