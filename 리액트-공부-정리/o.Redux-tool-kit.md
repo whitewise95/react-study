@@ -102,7 +102,7 @@ export default store;
 
 > 리덕스 툴킷
 ```js
-// src/redux/slices/config/configStore.js
+// src/redux/config/configStore.js
 
 import { configureStore } from "@reduxjs/toolkit";
 /**
