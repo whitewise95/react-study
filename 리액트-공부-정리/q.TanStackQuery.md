@@ -139,7 +139,7 @@ const App = () => {
 
 
 ### ***▶︎ 캐시 데이터는 어디에 보관하나요?***  
-- TanStack Query는 내부적으로 React Context API를 사용하여 구현되며, 모든 자식 컴포넌트가 캐시 데이터에 접근할 수 있도록 캐시 데이터를 전역적으로 관리하고 그 Context를 Cache Context라고 한다.  
+- TanStack Query는 내부적으로 React Context API를 사용하여 구현되며, 모든 자식 컴포넌트가 캐시 데이터에 접근할 수 있도록 캐시 데이터를 전역적으로 관리하고 그 Context를 Cache Context라고 한다.  
 
 
 ### ***▶︎ 그림으로 이해하는 TanStack Query의 데이터 흐름***    
@@ -149,6 +149,8 @@ const App = () => {
 # 4. LifeCycle
 ### ***▶︎ 그림으로 보는 TanStack Query의 생명주기***    
 <img width="645" alt="image" src="https://github.com/whitewise95/react-study/assets/81284265/d368a154-04f6-4f6a-8532-c0bd4e3dc73c">  
+
+
 | 상태 | 설명 |
 | --- | --- |
 | fresh | 데이터를 새로 패칭할 필요가 없는 상태입니다. staleTime이 지나지 않은 상태로, 캐시 데이터를 그대로 사용할 수 있습니다. |
@@ -161,8 +163,8 @@ const App = () => {
 
 
 
-# 5. default config(기본 설정)
-
+# 5. default config(기본 설정)  
+  
 | 기본 설정 | 의미 |
 | --- | --- |
 | staleTime: 0 | useQuery 또는 useInfiniteQuery에 등록된 queryFn 을 통해 fetch 받아온 데이터는 항상 stale data 취급 |
@@ -171,7 +173,9 @@ const App = () => {
 | refetchOnReconnect: true | Network 가 끊겼다가 재연결 되었을 때 stale data를 refetch 자동 실행 |
 | gcTime(cacheTime): 5분
 (1000 * 60 * 5 ms) | useQuery 또는 useInfiniteQuery가 있는 컴포넌트가 언마운트 되었을 때 inactive query라 부르며, inactive 상태가 5분 경과 후 GC(가비지콜렉터)에 의해 cache data 삭제 처리 |
-| retry: 3 | useQuery 또는 useInfiniteQuery에 등록된 queryFn 이 API 서버에 요청을 보내서 실패하더라도 바로 에러를 띄우지 않고 총 3번까지 재요청을 자동으로 시도 |  
+| retry: 3 | useQuery 또는 useInfiniteQuery에 등록된 queryFn 이 API 서버에 요청을 보내서 실패하더라도 바로 에러를 띄우지 않고 총 3번까지 재요청을 자동으로 시도 |
+
+  
 
 
 
