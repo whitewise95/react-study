@@ -25,7 +25,8 @@ const useBearsStore = create((set) => ({
 export default useBearsStore;
 ```
 
-ex)
+ex)  
+
 ```jsx
 import create from "zustand";
 
@@ -52,7 +53,10 @@ const useTodosStore = create((set) => ({
 export default useTodosStore;
 ```
 
-### ***📕 사용 ***  
+
+
+### ***📕 사용***    
+
 ```jsx
 import "./App.css";
 import useBearsStore from "./zustand/bearsStore";
