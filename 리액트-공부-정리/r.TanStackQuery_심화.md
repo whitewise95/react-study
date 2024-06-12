@@ -30,3 +30,6 @@ useQuery({
 
 # 2. Optimistic Updates
 - 서버 요청이 정상적으로 잘 될거란 가정하에 UI 변경을 먼저하고, 서버 요청 하는 방식. 혹시라도 서버 요청이 실패하는 경우, UI 를 원상복구(revert / roll back)
+
+<img width="677" alt="image" src="https://github.com/whitewise95/react-study/assets/81284265/f298ebd7-fc6d-4920-b8f5-59b71b9d66a0">
+
