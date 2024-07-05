@@ -9,7 +9,7 @@
 
 # 2. MPA와 SPA 그리고 주요 렌더링 기법
 
-## 원시적 방법, MPA 
+## 📕 원시적 방법, MPA 
 > 원시적인 서버 사이드 렌더링 방식인 MPA로부터 프론트엔드 웹 개발은 시작
 ```
 /about → about.html
@@ -17,11 +17,11 @@
 ```
 페이지 이동시 및 렌더링 시 깜빡거리는 현상이 있으므로 UX가 저하 -> React, Angular, Vue 등 SPA(Single Page Application)이 등장
 
-## 획기적 방법, SPA
+## 📕 획기적 방법, SPA
 > 브라우저에서 Javascript를 이용해 동적으로 페이지를 렌더링 하는 방식
 최초 서버로부터는 텅 빈, root라는 id를 가진 div만 다운로드 -> 더 이상 새로고침이나 깜빡거림 없이 웹서비스 이용이 가능하여 UX가 크게 향상  -> 늦는 초기로딩속도 -> 보완하기 위해 Code Spilitting(Lazy-Loading) 방법 제시
 
-### CSR(Client Side Rendering)  
+### ✅ CSR(Client Side Rendering)  
 <img width="721" alt="image" src="https://github.com/whitewise95/ts_js_react-study/assets/81284265/85560c50-ae9c-452e-a202-0d3382c893e7">  
 
 - 특징
@@ -36,7 +36,7 @@
     - 첫 페이지 로딩 시간(Time To View)이 길 수 있습니다.
     - JavaScript가 로딩되고 실행될 때까지 페이지가 비어있어 검색 엔진 최적화(SEO)에 불리합니다.
 
-### SSG(Static Site Generation)  
+### ✅ SSG(Static Site Generation)  
 <img width="706" alt="image" src="https://github.com/whitewise95/ts_js_react-study/assets/81284265/780104bf-c24c-45ba-abe3-8367b5e7ff26">  
 
 - 특징
@@ -56,7 +56,7 @@
  
 
 
-###  ISR(Incremental Static Regeneration)  
+###  ✅ ISR(Incremental Static Regeneration)  
 
 <img width="729" alt="ima. e" src="https://github.com/whitewise95/ts_js_react-study/assets/81284265/abe532d2-1e7c-49c2-8aa6-5cd232b46990">   
 
@@ -74,7 +74,7 @@
  
 
 
-### SSR (Server Side Rendering)    
+### ✅ SSR (Server Side Rendering)    
 
 <img width="696" alt="image" src="https://github.com/whitewise95/ts_js_react-study/assets/81284265/0eaa9bef-880a-4019-9842-7c95b3ba94a9">  
 
